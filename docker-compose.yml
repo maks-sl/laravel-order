@@ -18,9 +18,12 @@ services:
             - ./:/var/www
         links:
             - mysql
+            - redis
         environment:
             - "DB_PORT=3306"
             - "DB_HOST=mysql"
+            - "REDIS_PORT=6379"
+            - "REDIS_HOST=redis"
     mysql:
         image: mysql:5.7
         volumes:
@@ -32,3 +35,7 @@ services:
             - "MYSQL_DATABASE=app"
         ports:
             - "33061:3306"
+    redis:
+        image: redis:3.0
+        ports:
+            - "63791:6379"
