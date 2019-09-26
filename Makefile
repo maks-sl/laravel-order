@@ -14,5 +14,17 @@ perm:
 test:
 	docker-compose exec php-cli vendor/bin/phpunit
 
-fresh:
+migrate-fresh:
 	docker-compose exec php-cli php artisan migrate:fresh
+
+composer-install:
+	docker-compose exec php-cli composer install
+
+yarn-install:
+	docker-compose exec node yarn install
+
+yarn-dev:
+	docker-compose exec node yarn run dev
+
+yarn-watch:
+	docker-compose exec node yarn run watch
