@@ -20,6 +20,9 @@ migrate-fresh:
 composer-install:
 	docker-compose exec php-cli composer install
 
+composer-dump-o:
+	docker-compose exec php-cli composer dump-autoload -o
+
 yarn-install:
 	docker-compose exec node yarn install
 
