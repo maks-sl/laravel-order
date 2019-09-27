@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $phone
  *
  * @property Order[] $orders
+ * @method static Builder withPhone(string $phone)
  */
 class Client extends Model
 {
@@ -18,5 +20,10 @@ class Client extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function scopeWithPhone(Builder $query, string $phone)
+    {
+        return $this->where('phone', $phone);
     }
 }

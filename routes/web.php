@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+Route::name('welcome')->get('/', function () {
     return view('welcome');
 });
+
+Route::resource('order', 'OrderController')->only('create', 'store');
