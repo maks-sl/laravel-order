@@ -6,6 +6,7 @@ use App\Entity\Tariff;
 use App\UseCases\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -29,12 +30,12 @@ class OrderController extends Controller
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:1023',
             'tariff' => ['required', 'integer', Rule::exists('tariffs', 'id')],
-            'date' => 'required|date|after:today',
+            'date' => 'required|date|after:today|checkDateForTariff:tariff',
         ]);
 
         try {
             $order = $this->orders->create($request);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', 'Order creating error');
         }
         return redirect()->route('welcome')->with('status', 'Order #'.$order->id. ' was received');
