@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Tariff;
 use App\UseCases\OrderService;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\Order\CreateRequest;
 use Throwable;
 
 class OrderController extends Controller
@@ -23,16 +22,8 @@ class OrderController extends Controller
         return view('order.create', compact('tariffs'));
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:1023',
-            'tariff' => ['required', 'integer', Rule::exists('tariffs', 'id')],
-            'date' => 'required|date|after:today|checkDateForTariff:tariff',
-        ]);
-
         try {
             $order = $this->orders->create($request);
         } catch (Throwable $e) {

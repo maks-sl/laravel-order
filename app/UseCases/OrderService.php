@@ -6,7 +6,7 @@ use App\Entity\Client;
 use App\Entity\Order;
 use App\Entity\Tariff;
 use Exception;
-use Illuminate\Http\Request;
+use App\Http\Requests\Order\CreateRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -15,12 +15,12 @@ class OrderService
     /**
      * Create Order
      *
-     * @param Request $request
+     * @param CreateRequest $request
      * @return mixed
      * @throws Exception|Throwable
      * @static
      */
-    public function create(Request $request): Order
+    public function create(CreateRequest $request): Order
     {
         $tariff = Tariff::findOrFail($request['tariff']);
 
