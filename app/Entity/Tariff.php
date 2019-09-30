@@ -23,6 +23,9 @@ class Tariff extends Model
         'allowed_days' => 'array',
     ];
 
+    /**
+     * @return Carbon[]
+     */
     public function allowedDates(): array
     {
         if (!empty(array_diff($this->allowed_days, array_keys(Carbon::getDays()))) or empty($this->allowed_days)) {
@@ -34,7 +37,7 @@ class Tariff extends Model
         $dates = [];
 
         if (in_array($nowDay, $this->allowed_days)) {
-            $dates[] = $now->toDateString();
+            $dates[] = $now;
         }
         foreach ($allowedDays as $i => $d) {
             if ($d > $nowDay) {
@@ -52,7 +55,7 @@ class Tariff extends Model
             if ($current->greaterThanOrEqualTo($limitDate)) {
                 break;
             }
-            $dates[] = $current->toDateString();
+            $dates[] = clone $current;
             $seek++;
         }
         return $dates;

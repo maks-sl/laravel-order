@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $delivery_date
  * @property int $client_id
  * @property int $tariff_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @property Tariff $tariff
  * @property Client $client
