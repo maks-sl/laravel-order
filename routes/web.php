@@ -16,3 +16,11 @@ Route::name('welcome')->get('/', function () {
 });
 
 Route::resource('order', 'OrderController')->only('create', 'store');
+
+Route::group([
+    'prefix' => 'api-order',
+    'as' => 'api-order.',
+], function () {
+    Route::get('/create', 'OrderController@apiCreate')->name('create');
+    Route::post('/store', 'OrderController@apiStore')->name('store');
+});
