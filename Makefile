@@ -17,6 +17,15 @@ test:
 migrate-fresh:
 	docker-compose exec php-cli php artisan migrate:fresh
 
+key:
+	docker-compose exec php-cli php artisan key:generate
+
+seed:
+	docker-compose exec php-cli php artisan db:seed
+
+config-default:
+	cp .env.example .env
+
 composer-install:
 	docker-compose exec php-cli composer install
 
