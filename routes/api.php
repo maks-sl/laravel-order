@@ -15,4 +15,5 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'],
     function () {
         Route::get('/tariffs', 'TariffController@index');
         Route::get('/tariffs/{tariff}/dates', 'TariffController@dates');
+        Route::get('/departments', 'DepartmentController@index');
     });
