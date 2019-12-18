@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('order-form', require('./components/OrderForm.vue'));
+Vue.component('vote-form', require('./components/VoteForm.vue'));
 
 const app = new Vue({
     el: '#app'

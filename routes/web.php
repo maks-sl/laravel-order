@@ -11,16 +11,21 @@
 |
 */
 
-Route::name('welcome')->get('/', function () {
-    return view('welcome');
-});
+//Route::name('welcome')->get('/', function () {
+//    return view('welcome');
+//});
+//
+//Route::resource('order', 'OrderController')->only('create', 'store');
+//
+//Route::group([
+//    'prefix' => 'api-order',
+//    'as' => 'api-order.',
+//], function () {
+//    Route::get('/create', 'OrderController@apiCreate')->name('create');
+//    Route::post('/store', 'OrderController@apiStore')->name('store');
+//});
 
-Route::resource('order', 'OrderController')->only('create', 'store');
+Route::get('/', 'VoteController@create')->name('vote.create');
+Route::post('/vote/store', 'VoteController@store')->name('vote.store');
 
-Route::group([
-    'prefix' => 'api-order',
-    'as' => 'api-order.',
-], function () {
-    Route::get('/create', 'OrderController@apiCreate')->name('create');
-    Route::post('/store', 'OrderController@apiStore')->name('store');
-});
+//Route::resource('vote', 'VoteController')->only('create', 'store');
