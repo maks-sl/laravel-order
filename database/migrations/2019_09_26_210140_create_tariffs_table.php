@@ -17,7 +17,7 @@ class CreateTariffsTable extends Migration
             $table->increments('id');
             $table->string('name')->index()->unique();
             $table->integer('price');
-            $table->json('allowed_days');
+            $table->longText('allowed_days');
         });
     }
 
