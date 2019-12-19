@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class VoteController extends Controller
 {
     public function index()
     {
+        $results = DB::select( DB::raw('select d.name as label, d.color as backgroundColor, count(winner_id) as data from votes v join departments d on v.winner_id = d.id group by v.winner_id order by v.winner_id') );
+        $datasets = array_map(function ($item) {
+            return [
+                'label' => $item->label,
+                'backgroundColor' => $item->backgroundColor,
+                'data' => [$item->data],
+            ];
+        }, $results);
+
         return response()->json([
-            'labels' => ['00:10', '00:20', '00:30', '00:40'],
-            'datasets' => [
-                [
-                    'label' => 'A',
-                    'backgroundColor' => '#FF894F',
-                    'data' => [rand(0,2), rand(2,5), rand(5,7), rand(8,11)]
-                ],
-                [
-                    'label' => 'B',
-                    'backgroundColor' => '#1d643b',
-                    'data' => [rand(0,1), rand(2,6), rand(6,8), rand(8,10)]
-                ],
-            ],
+            'labels' => ['Votes count'],
+            'datasets' => $datasets,
         ]);
     }
 }
