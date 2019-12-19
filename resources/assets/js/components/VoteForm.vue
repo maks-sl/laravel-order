@@ -10,7 +10,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-3">
-                    <a href="/">Again?</a>
+                    <a href="/chart">Results?</a>
                 </div>
             </div>
         </template>
@@ -44,6 +44,7 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Vote</button>
             </div>
+
         </template>
     </form>
 </template>
@@ -124,11 +125,15 @@
                     axios.post('/vote/store', this.fields).then(response => {
                         this.fields = {}; //Clear input fields.
                         this.loaded = true;
-                        let id = response.data.data.id;
-                        this.success = `Vote #${id} was created`
+                        // let id = response.data.data.id;
+                        // window.location.href = '/';
+                        // this.success = `Vote #${id} was created`
+                        this.success = `Thanks for you vote!`
                     }).catch(error => {
                         this.loaded = true;
                         if (error.response.status === 422) {
+                            this.errors = error.response.data.errors || {};
+                        } else if (error.response.status === 423) {
                             this.success = `Thanks for you vote!`
                         } else {
                             this.fatal = 'Vote creating error'

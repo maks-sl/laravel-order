@@ -18,6 +18,7 @@ window.Fingerprint2 = require("fingerprintjs2")
 
 Vue.component('order-form', require('./components/OrderForm.vue'));
 Vue.component('vote-form', require('./components/VoteForm.vue'));
+Vue.component('chart', require('./components/Chart.vue'));
 
 const app = new Vue({
     el: '#app'

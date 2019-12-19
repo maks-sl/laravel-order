@@ -6,6 +6,7 @@ use App\Http\Resources\Orders\DetailResource;
 use App\Http\Requests\Vote\CreateRequest;
 use App\UseCases\VoteService;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Throwable;
 
 class VoteController extends Controller
@@ -17,9 +18,13 @@ class VoteController extends Controller
         $this->votes = $votes;
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('vote.create');
+        if (!$request->session()->exists('vote_counted')) {
+            return view('vote.create');
+        } else {
+            return view('vote.chart');
+        }
     }
 
     public function store(CreateRequest $request)
@@ -39,8 +44,12 @@ class VoteController extends Controller
         }
         return response()
             ->json(['errors' => 'Thanks for you vote!'])
-            ->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->setStatusCode(Response::HTTP_LOCKED);
 
     }
 
+    public function chart()
+    {
+        return view('vote.chart');
+    }
 }
