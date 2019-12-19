@@ -38,6 +38,9 @@ yarn-install:
 yarn-dev:
 	docker-compose exec node yarn run dev
 
+yarn-prod:
+	docker-compose exec node yarn run prod
+
 yarn-watch:
 	docker-compose exec node yarn run watch
 
