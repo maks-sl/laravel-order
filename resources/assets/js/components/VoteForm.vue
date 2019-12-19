@@ -8,11 +8,6 @@
             <div class="alert alert-success">
                 <strong>{{ success }}</strong>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-3">
-                    <a href="/chart">Results?</a>
-                </div>
-            </div>
         </template>
 
         <template v-if="!success">
@@ -134,9 +129,9 @@
                         if (error.response.status === 422) {
                             this.errors = error.response.data.errors || {};
                         } else if (error.response.status === 423) {
-                            this.success = `Thanks for you vote!`
+                            this.success = `You vote has already been taken. See you soon!`
                         } else {
-                            this.fatal = 'Vote creating error'
+                            this.fatal = 'Voting error'
                         }
                     });
                 }
