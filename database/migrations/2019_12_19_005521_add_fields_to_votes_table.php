@@ -30,6 +30,7 @@ class AddFieldsToVotesTable extends Migration
         Schema::table('votes', function (Blueprint $table) {
             $table->dropColumn('finger_hash');
             $table->dropColumn('ip');
+            $table->dropColumn('user_agent');
         });
     }
 }

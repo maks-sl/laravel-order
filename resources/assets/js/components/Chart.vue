@@ -1,34 +1,33 @@
 <template>
     <div class="small">
-        <line-chart :chart-data="chartdata"></line-chart>
-        <button @click="updData()">Update</button>
+        <bar-chart :chart-data="chartdata" :options="options"></bar-chart>
+        <button @click="timerPause()">Pause/Play</button>
     </div>
 </template>
 
 <script>
 
-    import LineChart from './LineChart.js'
+    import BarChart from './BarChart.js'
 
     export default {
-        components: { LineChart },
+        components: { BarChart },
         data: () => ({
             list: [],
             timer: '',
+            timer_paused: false,
             loaded: false,
             chartdata: {
-                labels: ['00:10', '00:20', '00:30', '00:40'],
-                datasets: [
-                    {
-                        label: 'A',
-                        backgroundColor: '#f87979',
-                        data: [0, 2, 7, 11]
-                    },
-                    {
-                        label: 'B',
-                        backgroundColor: '#f87929',
-                        data: [1, 7, 8, 9]
-                    }
-                ]
+                labels: [],
+                datasets: []
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             },
         }),
         created () {
@@ -49,30 +48,18 @@
         },
         methods: {
             updData () {
-                axios.get('/api/results').then(response => {
-                    if (response.data) {
-                        this.chartdata = response.data;
-                    }
-                }).catch(error => {
-                    this.fatal = 'Get results error';
-                });
-
-                // DATA SAMPLE
-                //
-                // this.chartdata = {
-                //     labels: [this.getRandomInt(), this.getRandomInt()],
-                //     datasets: [
-                //         {
-                //             label: 'Data One',
-                //             backgroundColor: '#f87979',
-                //             data: [this.getRandomInt(), this.getRandomInt()]
-                //         }, {
-                //             label: 'Data One',
-                //             backgroundColor: '#f87979',
-                //             data: [this.getRandomInt(), this.getRandomInt()]
-                //         }
-                //     ]
-                // }
+                if (!this.timer_paused) {
+                    axios.get('/api/results').then(response => {
+                        if (response.data) {
+                            this.chartdata = response.data;
+                        }
+                    }).catch(error => {
+                        this.fatal = 'Get results error';
+                    });
+                }
+            },
+            timerPause () {
+                this.timer_paused = !this.timer_paused;
             },
         }
     }

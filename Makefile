@@ -40,3 +40,6 @@ yarn-dev:
 
 yarn-watch:
 	docker-compose exec node yarn run watch
+
+redis-flush:
+	docker-compose exec redis redis-cli flushall
