@@ -17,6 +17,7 @@ class CreateRequest extends FormRequest
         return [
             'department' => ['required', 'integer', Rule::exists('departments', 'id')],
             'winner' => ['required', 'integer', Rule::exists('departments', 'id'), 'different:department'],
+            'finger_hash' => ['string'],
         ];
     }
 }

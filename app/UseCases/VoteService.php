@@ -24,7 +24,12 @@ class VoteService
         $winner = Department::findOrFail($request['winner']);
 
         /** @var Vote $vote */
-        $vote = Vote::make();
+        $request->header('User-Agent');
+        $vote = Vote::make([
+            'finger_hash' => $request['finger_hash'],
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
         $vote->department()->associate($department);
         $vote->winner()->associate($winner);
 
