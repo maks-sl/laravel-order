@@ -16,6 +16,7 @@ class CreateDepartmentsTable extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index()->unique();
+            $table->integer('exclude_country_id')->references('id')->on('countries')->onDelete('RESTRICT');
         });
     }
 

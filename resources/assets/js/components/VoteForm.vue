@@ -100,15 +100,21 @@
                 this.fields.winner = null;
                 this.winners = [];
 
+
                 let selected = Number(this.fields.department);
                 if (selected) {
-                    let to_win = [...this.departments];
-                    for (let key in to_win) {
-                        if (to_win[key].id === selected) {
-                            to_win.splice(key, 1);
-                        }
-                    }
-                    this.winners = to_win;
+                    axios.get('/api/departments/'+selected+'/countries').then(response => {
+                        this.winners = response.data.data;
+                    }).catch(error => {
+                        this.fatal = 'Can\'t get countries';
+                    });
+                    // let to_win = [...this.departments];
+                    // for (let key in to_win) {
+                    //     if (to_win[key].id === selected) {
+                    //         to_win.splice(key, 1);
+                    //     }
+                    // }
+                    // this.winners = to_win;
                 }
             },
             submit() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Departments;
+namespace App\Http\Resources\Countries;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $name
  *
  */
-class DepartmentResource extends JsonResource
+class CountryResource extends JsonResource
 {
     public function toArray($request): array
     {

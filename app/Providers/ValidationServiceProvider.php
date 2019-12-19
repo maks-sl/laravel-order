@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entity\Department;
 use App\Entity\Tariff;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,6 +27,20 @@ class ValidationServiceProvider extends ServiceProvider
             }
             return false;
         }, 'Date incorrect for this tariff');
+
+        Validator::extend('checkCountryForDept', function($attribute, $value, $parameters, $validator) {
+            $deptId = array_get($validator->getData(), $parameters[0], null);
+            if (!empty($deptId)) {
+                try {
+                    /** @var $dept Department*/
+                    $dept = Department::findOrFail($deptId);
+                    return $dept->exclude_country_id !== $value;
+                } catch (ModelNotFoundException $e) {
+                    return false;
+                }
+            }
+            return false;
+        }, 'Country incorrect for this department');
     }
 
     public function register()

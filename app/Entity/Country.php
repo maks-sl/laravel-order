@@ -5,11 +5,11 @@ namespace App\Entity;
 use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
- * @property int $exclude_country_id
  * @property string $name
+ * @property string $color
  *
  */
-class Department extends Model
+class Country extends Model
 {
     public $timestamps = false;
 
