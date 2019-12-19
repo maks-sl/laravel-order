@@ -16,7 +16,7 @@ class CreateVotesTable extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('department_id')->references('id')->on('departments')->onDelete('RESTRICT');
-            $table->integer('winner_id')->references('id')->on('departments')->onDelete('RESTRICT');
+            $table->integer('country_id')->references('id')->on('countries')->onDelete('RESTRICT');
             $table->timestamps();
         });
     }

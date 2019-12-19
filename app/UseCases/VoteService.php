@@ -2,6 +2,7 @@
 
 namespace App\UseCases;
 
+use App\Entity\Country;
 use App\Entity\Department;
 use App\Entity\Vote;
 use Exception;
@@ -21,7 +22,7 @@ class VoteService
     public function create(CreateRequest $request): Vote
     {
         $department = Department::findOrFail($request['department']);
-        $winner = Department::findOrFail($request['winner']);
+        $country = Country::findOrFail($request['winner']);
 
         /** @var Vote $vote */
         $request->header('User-Agent');
@@ -31,7 +32,7 @@ class VoteService
             'user_agent' => $request->userAgent(),
         ]);
         $vote->department()->associate($department);
-        $vote->winner()->associate($winner);
+        $vote->country()->associate($country);
 
         $vote->saveOrFail();
         return $vote;

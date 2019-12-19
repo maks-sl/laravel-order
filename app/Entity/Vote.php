@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $department_id
- * @property int $winner_id
+ * @property int $country_id
  * @property string $finger_hash
  * @property string $ip
  * @property string $user_agent
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $updated_at
  *
  * @property Department $department
- * @property Department $winner
+ * @property Country $country
  */
 class Vote extends Model
 {
@@ -28,8 +28,8 @@ class Vote extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function winner()
+    public function country()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Country::class);
     }
 }

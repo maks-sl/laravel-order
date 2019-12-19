@@ -9,7 +9,7 @@ class VoteController extends Controller
 {
     public function index()
     {
-        $results = DB::select( DB::raw('select d.name as label, d.color as backgroundColor, count(winner_id) as data from votes v join departments d on v.winner_id = d.id group by d.name, d.color order by v.winner_id') );
+        $results = DB::select( DB::raw('select c.name as label, c.color as backgroundColor, count(v.country_id) as data from votes v join countries c on v.country_id = c.id group by c.name, c.color order by v.country_id') );
         $datasets = array_map(function ($item) {
             return [
                 'label' => $item->label,
