@@ -20,11 +20,7 @@ class VoteController extends Controller
 
     public function create(Request $request)
     {
-        if (!$request->session()->exists('vote_counted')) {
-            return view('vote.create');
-        } else {
-            return view('vote.chart');
-        }
+        return view('vote.create');
     }
 
     public function store(CreateRequest $request)
