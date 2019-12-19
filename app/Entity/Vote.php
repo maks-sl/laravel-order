@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $department_id
  * @property int $winner_id
+ * @property string $finger_hash
+ * @property string $ip
+ * @property string $user_agent
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
@@ -17,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Vote extends Model
 {
+
+    protected $fillable = ['finger_hash', 'ip', 'user_agent'];
 
     public function department()
     {

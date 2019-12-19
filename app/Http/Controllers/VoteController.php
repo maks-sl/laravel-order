@@ -24,16 +24,23 @@ class VoteController extends Controller
 
     public function store(CreateRequest $request)
     {
-        try {
-            $vote = $this->votes->create($request);
-        } catch (Throwable $e) {
-            return response()
-                ->json(['errors' => 'Error creating of vote'])
-                ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        if (!$request->session()->exists('vote_counted')) {
+            try {
+                $vote = $this->votes->create($request);
+                $request->session()->put('vote_counted', true);
+            } catch (Throwable $e) {
+                return response()
+                    ->json(['errors' => 'Error creating of vote'])
+                    ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+            return (new DetailResource($vote))
+                ->response()
+                ->setStatusCode(Response::HTTP_CREATED);
         }
-        return (new DetailResource($vote))
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+        return response()
+            ->json(['errors' => 'Thanks for you vote!'])
+            ->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+
     }
 
 }

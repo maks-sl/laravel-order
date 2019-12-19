@@ -55,6 +55,7 @@
             return {
                 fatal: '',
                 success: '',
+                finger_hash: '',
                 departments: [],
                 winners: [],
                 fields: {},
@@ -64,6 +65,34 @@
         },
         methods: {
             init() {
+                let rememberHash = hash => {
+                    this.finger_hash = hash;
+                };
+                if (window.requestIdleCallback) {
+                    requestIdleCallback(function () {
+                        Fingerprint2.get(function (components)  {
+                            Fingerprint2.get(function (components) {
+                                console.log(components) // an array of components: {key: ..., value: ...}
+                            });
+                            let values = components.map(function (component) { return component.value });
+                            let hash = Fingerprint2.x64hash128(values.join(''), 31);
+                            rememberHash(hash);
+                        });
+                    });
+                } else {
+                    setTimeout(function () {
+                        Fingerprint2.get(function (components) {
+                            Fingerprint2.get(function (components) {
+                                console.log(components) // an array of components: {key: ..., value: ...}
+                            });
+                            let values = components.map(function (component) { return component.value });
+                            let hash =  Fingerprint2.x64hash128(values.join(''), 31);
+                            rememberHash(hash);
+                        });
+                    }, 500)
+                }
+
+
                 axios.get('/api/departments').then(response => {
                     this.departments = response.data.data;
                 }).catch(error => {
@@ -88,6 +117,7 @@
             },
             submit() {
                 if (this.loaded) {
+                    this.fields.finger_hash = this.finger_hash;
                     this.fatal = '';
                     this.loaded = false;
                     this.errors = {};
@@ -95,11 +125,11 @@
                         this.fields = {}; //Clear input fields.
                         this.loaded = true;
                         let id = response.data.data.id;
-                        this.success = `Vote #${id} was created `
+                        this.success = `Vote #${id} was created`
                     }).catch(error => {
                         this.loaded = true;
                         if (error.response.status === 422) {
-                            this.errors = error.response.data.errors || {};
+                            this.success = `Thanks for you vote!`
                         } else {
                             this.fatal = 'Vote creating error'
                         }
