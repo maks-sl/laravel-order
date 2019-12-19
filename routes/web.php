@@ -27,5 +27,6 @@
 
 Route::get('/', 'VoteController@create')->name('vote.create');
 Route::post('/vote/store', 'VoteController@store')->name('vote.store');
+Route::get('/chart', 'VoteController@chart')->name('vote.chart');
 
 //Route::resource('vote', 'VoteController')->only('create', 'store');
