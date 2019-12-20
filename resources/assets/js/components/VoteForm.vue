@@ -1,47 +1,72 @@
 <template>
-    <form @submit.prevent="submit">
-        <div v-if="fatal" class="alert alert-danger">
-            <strong>{{ fatal }}</strong>
+    <div>
+
+        <div v-if="waiting" class="loader">
+            <div class="loader-inner">
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+            </div>
         </div>
 
-        <template v-if="success">
-            <div class="alert alert-success">
-                <strong>{{ success }}</strong>
-            </div>
+        <template v-if="!waiting">
+
+            <form @submit.prevent="submit() + waitTimeLong()">
+                <div v-if="success" class="alert alert-success">
+                    <strong>{{ success }}</strong>
+                </div>
+                <div v-if="fatal" class="alert alert-danger">
+                    <strong>{{ fatal }}</strong>
+                </div>
+
+                <template v-if="step===0">
+                    <div class="form-group">
+                        <label for="department" class="col-form-label">Select your Department</label>
+                        <select id="department" class="form-control" name="department" v-model="fields.department" @change="changeDept() + waitTime()"
+                                :class="{'is-invalid' : errors && errors.department}">
+                            <option value=""></option>
+                            <option v-for="department in departments" v-bind:value="department.id">
+                                {{ department.name }}
+                            </option>
+                        </select>
+                        <span v-if="errors && errors.department" class="invalid-feedback"><strong>{{ errors.department[0] }}</strong></span>
+                    </div>
+                </template>
+
+                <template v-if="step===1">
+                    <div class="form-group">
+                        <label for="winner" class="col-form-label">Select Winner</label>
+                        <select id="winner" class="form-control" name="winner" v-model="fields.winner" @change="changeWinner()"
+                                :class="{'is-invalid' : errors && errors.winner}">
+                            <option value=""></option>
+                            <option v-for="winner in winners" v-bind:value="winner.id">
+                                {{ winner.name }}
+                            </option>
+                        </select>
+                        <span v-if="errors && errors.winner" class="invalid-feedback"><strong>{{ errors.winner[0] }}</strong></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button :disabled='submitDisabled' type="submit" class="btn btn-success">Vote</button>
+                    </div>
+                </template>
+
+            </form>
+
         </template>
-
-        <template v-if="!success">
-
-            <div class="form-group">
-                <label for="department" class="col-form-label">Department</label>
-                <select id="department" class="form-control" name="department" v-model="fields.department" @change="changeDept"
-                        :class="{'is-invalid' : errors && errors.department}">
-                    <option value=""></option>
-                    <option v-for="department in departments" v-bind:value="department.id">
-                        {{ department.name }}
-                    </option>
-                </select>
-                <span v-if="errors && errors.department" class="invalid-feedback"><strong>{{ errors.department[0] }}</strong></span>
-            </div>
-
-            <div class="form-group">
-                <label for="winner" class="col-form-label">Winner</label>
-                <select id="winner" class="form-control" name="winner" v-model="fields.winner"
-                        :class="{'is-invalid' : errors && errors.winner}">
-                    <option value=""></option>
-                    <option v-for="winner in winners" v-bind:value="winner.id">
-                        {{ winner.name }}
-                    </option>
-                </select>
-                <span v-if="errors && errors.winner" class="invalid-feedback"><strong>{{ errors.winner[0] }}</strong></span>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Vote</button>
-            </div>
-
-        </template>
-    </form>
+    </div>
 </template>
 
 
@@ -51,6 +76,9 @@
             return {
                 fatal: '',
                 success: '',
+                step: 0,
+                waiting: true,
+                submitDisabled: true,
                 finger_hash: '',
                 departments: [],
                 winners: [],
@@ -61,6 +89,7 @@
         },
         methods: {
             init() {
+                this.waitTimeLong();
                 let rememberHash = hash => {
                     this.finger_hash = hash;
                 };
@@ -95,16 +124,27 @@
                     this.fatal = 'Can\'t get departments';
                 });
             },
+            unWait() {
+                this.waiting = false;
+            },
+            waitTime () {
+                this.waiting = true;
+                setTimeout(this.unWait, 1900);
+            },
+            waitTimeLong () {
+                this.waiting = true;
+                setTimeout(this.unWait, 3500);
+            },
             changeDept() {
                 this.fatal = '';
                 this.fields.winner = null;
                 this.winners = [];
 
-
                 let selected = Number(this.fields.department);
                 if (selected) {
                     axios.get('/api/departments/'+selected+'/countries').then(response => {
                         this.winners = response.data.data;
+                        this.step = 1;
                     }).catch(error => {
                         this.fatal = 'Can\'t get countries';
                     });
@@ -115,6 +155,13 @@
                     //     }
                     // }
                     // this.winners = to_win;
+                }
+            },
+            changeWinner() {
+                this.submitDisabled = true;
+                let selected = Number(this.fields.winner);
+                if (selected) {
+                    this.submitDisabled = false;
                 }
             },
             submit() {
@@ -136,8 +183,10 @@
                             this.errors = error.response.data.errors || {};
                         } else if (error.response.status === 423) {
                             this.success = `You vote has already been taken. See you soon!`
+                            this.step = null;
                         } else {
                             this.fatal = 'Voting error'
+                            this.step = null;
                         }
                     });
                 }
