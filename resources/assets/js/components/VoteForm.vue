@@ -24,44 +24,58 @@
         <template v-if="!waiting">
 
             <form @submit.prevent="submit() + waitTimeLong()">
-                <div v-if="success" class="alert alert-success">
-                    <strong>{{ success }}</strong>
+                <div v-if="success" class="card">
+                    <div class="card-body">
+                        <div class="alert alert-success">
+                            <strong>{{ success }}</strong>
+                        </div>
+                    </div>
                 </div>
-                <div v-if="fatal" class="alert alert-danger">
-                    <strong>{{ fatal }}</strong>
+                <div v-if="fatal" class="card">
+                    <div class="card-body">
+                        <div class="alert alert-danger">
+                            <strong>{{ fatal }}</strong>
+                        </div>
+                    </div>
                 </div>
 
-                <template v-if="step===0">
-                    <div class="form-group">
-                        <label for="department" class="col-form-label">Select your Department</label>
-                        <select id="department" class="form-control" name="department" v-model="fields.department" @change="changeDept() + waitTime()"
-                                :class="{'is-invalid' : errors && errors.department}">
-                            <option value=""></option>
-                            <option v-for="department in departments" v-bind:value="department.id">
-                                {{ department.name }}
-                            </option>
-                        </select>
-                        <span v-if="errors && errors.department" class="invalid-feedback"><strong>{{ errors.department[0] }}</strong></span>
-                    </div>
-                </template>
 
-                <template v-if="step===1">
-                    <div class="form-group">
-                        <label for="winner" class="col-form-label">Select Winner</label>
-                        <select id="winner" class="form-control" name="winner" v-model="fields.winner" @change="changeWinner()"
-                                :class="{'is-invalid' : errors && errors.winner}">
-                            <option value=""></option>
-                            <option v-for="winner in winners" v-bind:value="winner.id">
-                                {{ winner.name }}
-                            </option>
-                        </select>
-                        <span v-if="errors && errors.winner" class="invalid-feedback"><strong>{{ errors.winner[0] }}</strong></span>
-                    </div>
 
-                    <div class="form-group">
-                        <button :disabled='submitDisabled' type="submit" class="btn btn-success">Vote</button>
+                <div v-if="step===0" class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="department" class="col-form-label">Select your Department</label>
+                            <select id="department" class="form-control" name="department" v-model="fields.department" @change="changeDept() + waitTime()"
+                                    :class="{'is-invalid' : errors && errors.department}">
+                                <option value=""></option>
+                                <option v-for="department in departments" v-bind:value="department.id">
+                                    {{ department.name }}
+                                </option>
+                            </select>
+                            <span v-if="errors && errors.department" class="invalid-feedback"><strong>{{ errors.department[0] }}</strong></span>
+                        </div>
                     </div>
-                </template>
+                </div>
+
+                <div v-if="step===1" class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="winner" class="col-form-label">Select Winner</label>
+                            <select id="winner" class="form-control" name="winner" v-model="fields.winner" @change="changeWinner()"
+                                    :class="{'is-invalid' : errors && errors.winner}">
+                                <option value=""></option>
+                                <option v-for="winner in winners" v-bind:value="winner.id">
+                                    {{ winner.name }}
+                                </option>
+                            </select>
+                            <span v-if="errors && errors.winner" class="invalid-feedback"><strong>{{ errors.winner[0] }}</strong></span>
+                        </div>
+
+                        <div class="form-group">
+                            <button :disabled='submitDisabled' type="submit" class="btn btn-success">Vote</button>
+                        </div>
+                    </div>
+                </div>
 
             </form>
 
@@ -177,6 +191,7 @@
                         // window.location.href = '/';
                         // this.success = `Vote #${id} was created`
                         this.success = `Thanks for you vote!`
+                        this.step = null;
                     }).catch(error => {
                         this.loaded = true;
                         if (error.response.status === 422) {
