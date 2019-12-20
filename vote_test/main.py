@@ -4,7 +4,7 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor as PoolExecutor
 
 URL = 'http://127.0.0.1:8080/vote/store'
-CNT = 10000
+CNT = 10
 
 
 def create_attempt(dept, win):
@@ -14,6 +14,8 @@ def create_attempt(dept, win):
 
 def get_it(blank):
     r = create_attempt(randrange(1, 15), randrange(1, 15))
+    if r.status_code != 201:
+        print('[Warning] Not 201 status')
     # print('[' + str(r.status_code) + ']' + str(r.content))
 
 
