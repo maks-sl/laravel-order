@@ -1,5 +1,5 @@
 <template>
-    <div class="small">
+    <div class="small mt-0 mb-0">
         <bar-chart :chart-data="chartdata" :options="options"></bar-chart>
         <button @click="timerPause()">Pause/Play</button>
     </div>
