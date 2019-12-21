@@ -8,6 +8,7 @@
 <script>
 
     import BarChart from './BarChart.js'
+    import 'chartjs-plugin-datalabels'
 
     export default {
         components: { BarChart },
@@ -21,12 +22,25 @@
                 datasets: []
             },
             options: {
+                tooltips: {
+                    enabled: false
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true
                         }
                     }]
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        formatter: Math.round,
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
                 }
             },
         }),
