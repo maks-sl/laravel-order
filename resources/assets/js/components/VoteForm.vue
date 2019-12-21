@@ -44,7 +44,7 @@
                 <div v-if="step===0" class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="department" class="col-form-label">Select your Department</label>
+                            <label for="department" class="col-form-label">Выберите свой офис</label>
                             <select id="department" class="form-control" name="department" v-model="fields.department" @change="changeDept() + waitTime()"
                                     :class="{'is-invalid' : errors && errors.department}">
                                 <option value=""></option>
@@ -60,7 +60,7 @@
                 <div v-if="step===1" class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="winner" class="col-form-label">Select Winner</label>
+                            <label for="winner" class="col-form-label">За кого голосуем?</label>
                             <select id="winner" class="form-control" name="winner" v-model="fields.winner" @change="changeWinner()"
                                     :class="{'is-invalid' : errors && errors.winner}">
                                 <option value=""></option>
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button :disabled='submitDisabled' type="submit" class="btn btn-success">Vote</button>
+                            <button :disabled='submitDisabled' type="submit" class="btn btn-success">Голосовать</button>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                 axios.get('/api/departments').then(response => {
                     this.departments = response.data.data;
                 }).catch(error => {
-                    this.fatal = 'Can\'t get departments';
+                    this.fatal = 'Ошибка загрузки офисов';
                 });
             },
             unWait() {
@@ -160,7 +160,7 @@
                         this.winners = response.data.data;
                         this.step = 1;
                     }).catch(error => {
-                        this.fatal = 'Can\'t get countries';
+                        this.fatal = 'Ошибка загрузки стран';
                     });
                     // let to_win = [...this.departments];
                     // for (let key in to_win) {
@@ -190,17 +190,17 @@
                         // let id = response.data.data.id;
                         // window.location.href = '/';
                         // this.success = `Vote #${id} was created`
-                        this.success = `Thanks for you vote!`
+                        this.success = 'Спасибо, Ваш голос учтён. До новых встреч!';
                         this.step = null;
                     }).catch(error => {
                         this.loaded = true;
                         if (error.response.status === 422) {
                             this.errors = error.response.data.errors || {};
                         } else if (error.response.status === 423) {
-                            this.success = `You vote has already been taken. See you soon!`
+                            this.success = 'Спасибо, Ваш голос учтён. До новых встреч!';
                             this.step = null;
                         } else {
-                            this.fatal = 'Voting error'
+                            this.fatal = 'Произошла ошибка. Попробуйте перезагрузить страницу!';
                             this.step = null;
                         }
                     });
