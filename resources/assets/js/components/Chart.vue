@@ -1,7 +1,7 @@
 <template>
-    <div class="small mt-0 mb-0">
+    <div class="mt-0 mb-0" style="max-width: 800px; margin: auto">
         <bar-chart :chart-data="chartdata" :options="options"></bar-chart>
-        <button @click="timerPause()">Pause/Play</button>
+        <button @click="timerPause()"><span v-if="!timer_paused">Pause</span><span v-if="timer_paused">Play</span></button>
     </div>
 </template>
 
