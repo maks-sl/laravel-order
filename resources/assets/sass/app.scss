@@ -27,12 +27,11 @@ body {
 .card.none-border {
     border: none;
 }
+.card.none-bg {
+    background: none;
+}
 .card.h-min-130 {
     min-height: 130px;
-}
-.card-body.bg-filled {
-    background: url('../images/bg16.png') no-repeat center center fixed;
-    background-size: cover;
 }
 
 /* ############# LOADER ############ */
