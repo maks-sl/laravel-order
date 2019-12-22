@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entity\Poll;
 use App\Http\Requests\Poll\ManageRequest;
 use App\UseCases\PollService;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class PollController extends Controller
 
     public function index(Request $request)
     {
-        return view('poll.index');
+        $poll = Poll::all()->first();
+        return view('poll.index', compact('poll'));
     }
 
     public function manage(ManageRequest $request)
