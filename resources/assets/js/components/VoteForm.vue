@@ -1,22 +1,26 @@
 <template>
     <div>
 
-        <div v-if="waiting" class="loader">
-            <div class="loader-inner">
-                <div class="loader-line-wrap">
-                    <div class="loader-line"></div>
-                </div>
-                <div class="loader-line-wrap">
-                    <div class="loader-line"></div>
-                </div>
-                <div class="loader-line-wrap">
-                    <div class="loader-line"></div>
-                </div>
-                <div class="loader-line-wrap">
-                    <div class="loader-line"></div>
-                </div>
-                <div class="loader-line-wrap">
-                    <div class="loader-line"></div>
+        <div class="card" v-if="waiting">
+            <div class="card-body">
+                <div class="loader">
+                    <div class="loader-inner">
+                        <div class="loader-line-wrap">
+                            <div class="loader-line"></div>
+                        </div>
+                        <div class="loader-line-wrap">
+                            <div class="loader-line"></div>
+                        </div>
+                        <div class="loader-line-wrap">
+                            <div class="loader-line"></div>
+                        </div>
+                        <div class="loader-line-wrap">
+                            <div class="loader-line"></div>
+                        </div>
+                        <div class="loader-line-wrap">
+                            <div class="loader-line"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
