@@ -31,18 +31,36 @@
                 },
                 scales: {
                     yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
                         ticks: {
                             beginAtZero: true,
+                            fontSize: 30,
+                            fontStyle: 'bold',
+                            fontColor: '#FFF',
+                        },
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            fontSize: 15,
+                            fontStyle: 'bold',
+                            fontColor: '#FFF',
                         },
                     }]
                 },
                 plugins: {
                     datalabels: {
+                        color: '#FFF',
                         anchor: 'end',
                         align: 'end',
                         formatter: Math.round,
                         font: {
-                            weight: 'bold'
+                            size: 30,
+                            weight: 'bold',
                         }
                     }
                 }
