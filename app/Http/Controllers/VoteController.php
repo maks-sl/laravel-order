@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entity\Poll;
 use App\Http\Resources\Orders\DetailResource;
 use App\Http\Requests\Vote\CreateRequest;
 use App\UseCases\VoteService;
@@ -20,7 +21,8 @@ class VoteController extends Controller
 
     public function create(Request $request)
     {
-        return view('vote.create');
+        $poll = Poll::all()->first();
+        return view('vote.create', compact('poll'));
     }
 
     public function store(CreateRequest $request)
