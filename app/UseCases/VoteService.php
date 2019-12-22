@@ -25,9 +25,9 @@ class VoteService
         $country = Country::findOrFail($request['winner']);
 
         /** @var Vote $vote */
-        $request->header('User-Agent');
         $vote = Vote::make([
             'finger_hash' => $request['finger_hash'],
+            'platform' => $request['platform'],
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
