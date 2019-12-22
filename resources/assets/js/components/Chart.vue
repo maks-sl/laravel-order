@@ -62,7 +62,7 @@
                     this.loaded = true
                 }
             }).catch(error => {
-                this.fatal = 'Get results error';
+                this.fatal = 'Ошибка загрузки данных';
             });
         },
         methods: {
@@ -73,7 +73,7 @@
                             this.chartdata = response.data;
                         }
                     }).catch(error => {
-                        this.fatal = 'Get results error';
+                        this.fatal = 'Ошибка загрузки данных';
                     });
                 }
             },
