@@ -25,4 +25,8 @@ class Poll extends Model
         $this->status = self::STATUS_PAUSED;
     }
 
+    public function isStarted(): bool {
+        return $this->status == self::STATUS_STARTED;
+    }
+
 }
