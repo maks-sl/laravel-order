@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="card" v-if="waiting">
+        <div class="card h-min-130" v-if="waiting">
             <div class="card-body">
                 <div class="loader">
                     <div class="loader-inner">

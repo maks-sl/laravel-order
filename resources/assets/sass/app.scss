@@ -24,12 +24,14 @@ body {
 .app-content {
     flex: 1;
 }
-
-.card{
+.card.none-border {
+    border: none;
+}
+.card.h-min-130 {
     min-height: 130px;
 }
-.card-body {
-    background: url('../images/bg.jpg') no-repeat center center fixed;
+.card-body.bg-filled {
+    background: url('../images/bg16.png') no-repeat center center fixed;
     background-size: cover;
 }
 
