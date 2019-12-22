@@ -190,14 +190,14 @@
                         // let id = response.data.data.id;
                         // window.location.href = '/';
                         // this.success = `Vote #${id} was created`
-                        this.success = 'Спасибо, Ваш голос учтён. До новых встреч!';
+                        this.success = 'Спасибо за Ваш голос! С уважением, WORLD VISION by TIHVINSKAYA';
                         this.step = null;
                     }).catch(error => {
                         this.loaded = true;
                         if (error.response.status === 422) {
                             this.errors = error.response.data.errors || {};
                         } else if (error.response.status === 423) {
-                            this.success = 'Спасибо, Ваш голос учтён. До новых встреч!';
+                            this.success = 'Спасибо за Ваш голос! С уважением, WORLD VISION by TIHVINSKAYA.';
                             this.step = null;
                         } else {
                             this.fatal = 'Произошла ошибка. Попробуйте перезагрузить страницу!';

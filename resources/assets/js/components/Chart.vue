@@ -1,7 +1,7 @@
 <template>
     <div class="mt-0 mb-0" style="max-width: 800px; margin: auto">
         <bar-chart :chart-data="chartdata" :options="options"></bar-chart>
-        <button @click="timerPause()"><span v-if="!timer_paused">Pause</span><span v-if="timer_paused">Play</span></button>
+<!--        <button @click="timerPause()"><span v-if="!timer_paused">Pause</span><span v-if="timer_paused">Play</span></button>-->
     </div>
 </template>
 
@@ -38,12 +38,11 @@
                 },
                 plugins: {
                     datalabels: {
-                        color: '#FFF',
                         anchor: 'end',
-                        align: 'start',
+                        align: 'end',
                         formatter: Math.round,
                         font: {
-                            weight: 'bold',
+                            weight: 'bold'
                         }
                     }
                 }
