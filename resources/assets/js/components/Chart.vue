@@ -48,6 +48,7 @@
                 }
             },
         }),
+        props: ['fetchAddress'],
         created () {
             this.updData();
             this.timer = setInterval(this.updData, 1000)
@@ -55,7 +56,7 @@
 
         async mounted () {
             this.loaded = false
-            axios.get('/api/results').then(response => {
+            axios.get(this.fetchAddress).then(response => {
                 if (response.data) {
                     this.chartdata = response.data;
                     this.loaded = true
@@ -67,7 +68,7 @@
         methods: {
             updData () {
                 if (!this.timer_paused) {
-                    axios.get('/api/results').then(response => {
+                    axios.get(this.fetchAddress).then(response => {
                         if (response.data) {
                             this.chartdata = response.data;
                         }
