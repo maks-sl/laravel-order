@@ -28,6 +28,7 @@
 Route::get('/', 'VoteController@create')->name('vote.create');
 Route::post('/vote/store', 'VoteController@store')->name('vote.store');
 Route::get('/chart', 'VoteController@chart')->name('vote.chart');
+Route::get('/unique', 'VoteController@unique')->name('vote.unique');
 Route::get('/manage-secret-panel', 'PollController@index')->name('poll.index');
 Route::post('/poll/manage', 'PollController@manage')->name('poll.manage');
 

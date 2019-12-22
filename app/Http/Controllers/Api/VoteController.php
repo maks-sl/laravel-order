@@ -31,4 +31,33 @@ class VoteController extends Controller
             'datasets' => [$datasets],
         ]);
     }
+
+    public function unique()
+    {
+        $results = DB::select( DB::raw('
+select
+    c.name as label, c.color as backgroundColor, count(v.country_id) as data
+from (select distinct country_id, finger_hash from votes) v join countries c
+    on v.country_id = c.id
+group by c.name, c.color, v.country_id
+order by v.country_id
+') );
+        $datasets = [
+            'label' => '',
+            'backgroundColor' => [],
+            'data' => [],
+
+        ];
+        $labels = [];
+        foreach ($results as $item) {
+            $datasets['backgroundColor'][] = $item->backgroundColor;
+            $datasets['data'][] = $item->data;
+            $labels[] = $item->label;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'datasets' => [$datasets],
+        ]);
+    }
 }

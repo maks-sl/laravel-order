@@ -50,4 +50,9 @@ class VoteController extends Controller
     {
         return view('vote.chart');
     }
+
+    public function unique()
+    {
+        return view('vote.unique');
+    }
 }
