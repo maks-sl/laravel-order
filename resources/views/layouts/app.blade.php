@@ -14,7 +14,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css', 'hot') }}" rel="stylesheet">
 </head>
-<body style="background: url('images/bg16.png') no-repeat center center; background-size: cover;">
+<body>
 <div id="app" class="my-auto">
     <main class="app-content py-3">
         <div class="container">
