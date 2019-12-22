@@ -98,6 +98,7 @@
                 waiting: true,
                 submitDisabled: true,
                 finger_hash: '',
+                platform: '',
                 departments: [],
                 winners: [],
                 fields: {},
@@ -108,31 +109,28 @@
         methods: {
             init() {
                 this.waitTimeLong();
-                let rememberHash = hash => {
+                let rememberFinger = (hash, platform) => {
                     this.finger_hash = hash;
+                    this.platform = platform;
+                };
+                let initFinger = () => {
+                    Fingerprint2.get(function (components)  {
+                        let platform = 'Undefined OS';
+                        for (let index = 0; index < components.length; ++index) {
+                            if (components[index].key === 'platform') {
+                                platform = components[index].value;
+                                break;
+                            }
+                        }
+                        let values = components.map(function (component) { return component.value });
+                        let hash = Fingerprint2.x64hash128(values.join(''), 31);
+                        rememberFinger(hash, platform);
+                    });
                 };
                 if (window.requestIdleCallback) {
-                    requestIdleCallback(function () {
-                        Fingerprint2.get(function (components)  {
-                            Fingerprint2.get(function (components) {
-                                console.log(components) // an array of components: {key: ..., value: ...}
-                            });
-                            let values = components.map(function (component) { return component.value });
-                            let hash = Fingerprint2.x64hash128(values.join(''), 31);
-                            rememberHash(hash);
-                        });
-                    });
+                    requestIdleCallback(initFinger);
                 } else {
-                    setTimeout(function () {
-                        Fingerprint2.get(function (components) {
-                            Fingerprint2.get(function (components) {
-                                console.log(components) // an array of components: {key: ..., value: ...}
-                            });
-                            let values = components.map(function (component) { return component.value });
-                            let hash =  Fingerprint2.x64hash128(values.join(''), 31);
-                            rememberHash(hash);
-                        });
-                    }, 500)
+                    setTimeout(initFinger, 500)
                 }
 
 
@@ -166,13 +164,6 @@
                     }).catch(error => {
                         this.fatal = 'Ошибка загрузки стран';
                     });
-                    // let to_win = [...this.departments];
-                    // for (let key in to_win) {
-                    //     if (to_win[key].id === selected) {
-                    //         to_win.splice(key, 1);
-                    //     }
-                    // }
-                    // this.winners = to_win;
                 }
             },
             changeWinner() {
@@ -185,15 +176,13 @@
             submit() {
                 if (this.loaded) {
                     this.fields.finger_hash = this.finger_hash;
+                    this.fields.platform = this.platform;
                     this.fatal = '';
                     this.loaded = false;
                     this.errors = {};
                     axios.post('/vote/store', this.fields).then(response => {
                         this.fields = {}; //Clear input fields.
                         this.loaded = true;
-                        // let id = response.data.data.id;
-                        // window.location.href = '/';
-                        // this.success = `Vote #${id} was created`
                         this.success = 'Спасибо за Ваш голос! С уважением, WORLD VISION by TIHVINSKAYA';
                         this.step = null;
                     }).catch(error => {

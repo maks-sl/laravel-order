@@ -18,6 +18,7 @@ class CreateRequest extends FormRequest
             'department' => ['required', 'integer', Rule::exists('departments', 'id')],
             'winner' => 'required|integer|checkCountryForDept:department',
             'finger_hash' => ['required', 'string'],
+            'platform' => ['required', 'string'],
         ];
     }
 }
