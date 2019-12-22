@@ -22,23 +22,28 @@
                 datasets: []
             },
             options: {
+                responsive: true,
                 tooltips: {
                     enabled: false
+                },
+                legend: {
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
-                        }
+                            beginAtZero: true,
+                        },
                     }]
                 },
                 plugins: {
                     datalabels: {
+                        color: '#FFF',
                         anchor: 'end',
-                        align: 'end',
+                        align: 'start',
                         formatter: Math.round,
                         font: {
-                            weight: 'bold'
+                            weight: 'bold',
                         }
                     }
                 }
