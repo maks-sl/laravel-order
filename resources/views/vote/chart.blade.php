@@ -4,8 +4,8 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">
-            <div class="card none-border">
-                <div class="card-body bg-filled">
+            <div class="card none-border none-bg">
+                <div class="card-body">
                     <chart fetch-address="/api/results"></chart>
                 </div>
             </div>

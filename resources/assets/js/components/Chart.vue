@@ -22,6 +22,11 @@
                 datasets: []
             },
             options: {
+                layout: {
+                    padding: {
+                        right: 50,
+                    }
+                },
                 responsive: true,
                 tooltips: {
                     enabled: false
