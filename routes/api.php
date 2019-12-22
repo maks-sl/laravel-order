@@ -18,4 +18,5 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'],
         Route::get('/departments', 'DepartmentController@index');
         Route::get('/departments/{department}/countries', 'DepartmentController@countries');
         Route::get('/results', 'VoteController@index');
+        Route::get('/unique', 'VoteController@unique');
     });
