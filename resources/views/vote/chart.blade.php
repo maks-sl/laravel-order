@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <chart></chart>
+                    <chart fetch-address="/api/results"></chart>
                 </div>
             </div>
         </div>
