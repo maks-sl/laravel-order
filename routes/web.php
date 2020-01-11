@@ -31,5 +31,6 @@ Route::get('/chart', 'VoteController@chart')->name('vote.chart');
 Route::get('/unique', 'VoteController@unique')->name('vote.unique');
 Route::get('/manage-secret-panel', 'PollController@index')->name('poll.index');
 Route::post('/poll/manage', 'PollController@manage')->name('poll.manage');
+Route::get('/time', 'TimeController@index')->name('time.index');
 
 //Route::resource('vote', 'VoteController')->only('create', 'store');

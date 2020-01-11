@@ -8,7 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-window.Fingerprint2 = require("fingerprintjs2")
+window.Fingerprint2 = require("fingerprintjs2");
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,6 +19,7 @@ window.Fingerprint2 = require("fingerprintjs2")
 Vue.component('order-form', require('./components/OrderForm.vue'));
 Vue.component('vote-form', require('./components/VoteForm.vue'));
 Vue.component('chart', require('./components/Chart.vue'));
+Vue.component('time-zone', require('./components/Time.vue'));
 
 const app = new Vue({
     el: '#app'
