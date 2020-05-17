@@ -29,6 +29,18 @@ Route::group(
     }
 );
 
+Route::group(
+    [
+        'prefix' => 'cabinet',
+        'as' => 'cabinet.',
+        'namespace' => 'Cabinet',
+        'middleware' => ['auth'],
+    ],
+    function () {
+        Route::get('/', 'HomeController@index')->name('home');
+    }
+);
+
 // ORDER SAMPLE
 //Route::name('welcome')->get('/', function () {
 //    return view('order.welcome');
