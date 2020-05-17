@@ -1,5 +1,5 @@
 @if (session('status'))
-    <div  class="card">
+    <div  class="card mb-3">
         <div class="card-body">
             <div class="alert alert-success">
                 {{ session('status') }}
@@ -9,7 +9,7 @@
 @endif
 
 @if (session('success'))
-    <div  class="card">
+    <div  class="card mb-3">
         <div class="card-body">
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -19,7 +19,7 @@
 @endif
 
 @if (session('error'))
-    <div  class="card">
+    <div  class="card mb-3">
         <div class="card-body">
             <div class="alert alert-danger">
                 {{ session('error') }}
@@ -29,7 +29,7 @@
 @endif
 
 @if (session('info'))
-    <div  class="card">
+    <div  class="card mb-3">
         <div class="card-body">
             <div class="alert alert-info">
                 {{ session('info') }}
