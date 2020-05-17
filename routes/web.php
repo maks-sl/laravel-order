@@ -15,6 +15,20 @@ Auth::routes();
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.verify');
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(
+    [
+        'prefix' => 'admin',
+        'as' => 'admin.',
+        'namespace' => 'Admin',
+        'middleware' => ['auth'],
+    ],
+    function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('users', 'UsersController');
+        Route::post('/users/{user}/verify', 'UsersController@verify')->name('users.verify');
+    }
+);
+
 // ORDER SAMPLE
 //Route::name('welcome')->get('/', function () {
 //    return view('order.welcome');
