@@ -46,6 +46,16 @@ class User extends Authenticatable
         ]);
     }
 
+    public static function new($name, $email): self
+    {
+        return static::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => bcrypt(Str::random()),
+            'status' => self::STATUS_ACTIVE,
+        ]);
+    }
+
     public function isWait(): bool
     {
         return $this->status === self::STATUS_WAIT;
