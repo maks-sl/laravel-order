@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Entity\Parsers\Single;
+
+use App\Entity\User;
+use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+/**
+ * @mixin Eloquent
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $status
+ * @property string $url
+ * @property string $css_path
+ * @property string $regex
+ * @property int $match_group
+ * @property bool $strip_tags
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ * @property User $user
+ *
+ * @method static Builder forUser(User $user)
+ */
+class Parser extends Model
+{
+
+    const STATUS_PAUSED = 0;
+    const STATUS_ACTIVE = 1;
+
+    protected $fillable = ['name', 'status', 'url', 'css_path', 'regex', 'match_group', 'strip_tags'];
+
+    protected $table = "parser_single";
+
+    // ########### LOGIC #############
+
+    public function isActive(): bool {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isPaused(): bool {
+        return $this->status == self::STATUS_PAUSED;
+    }
+
+    // ########### RELATIONS #############
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeForUser(Builder $query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+}

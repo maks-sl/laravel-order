@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Parsers\Single\Parser;
 use App\Entity\User;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
 
@@ -55,4 +56,24 @@ Breadcrumbs::register('admin.users.edit', function (Crumbs $crumbs, User $user) 
 Breadcrumbs::register('cabinet.home', function (Crumbs $crumbs) {
     $crumbs->parent('home');
     $crumbs->push('Cabinet', route('cabinet.home'));
+});
+
+Breadcrumbs::register('cabinet.single.parser.index', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Single Parsers', route('cabinet.single.parser.index'));
+});
+
+Breadcrumbs::register('cabinet.single.parser.create', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.single.parser.index');
+    $crumbs->push('Create', route('cabinet.single.parser.create'));
+});
+
+Breadcrumbs::register('cabinet.single.parser.show', function (Crumbs $crumbs, Parser $parser) {
+    $crumbs->parent('cabinet.single.parser.index');
+    $crumbs->push($parser->name, route('cabinet.single.parser.show', $parser));
+});
+
+Breadcrumbs::register('cabinet.single.parser.edit', function (Crumbs $crumbs, Parser $parser) {
+    $crumbs->parent('cabinet.single.parser.show', $parser);
+    $crumbs->push('Edit', route('cabinet.single.parser.edit', $parser));
 });

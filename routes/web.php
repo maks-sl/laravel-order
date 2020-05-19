@@ -38,6 +38,16 @@ Route::group(
     ],
     function () {
         Route::get('/', 'HomeController@index')->name('home');
+
+        Route::group([
+            'prefix' => 'single',
+            'as' => 'single.',
+            'namespace' => 'Single',
+        ],
+        function () {
+            Route::resource('parser', 'ParserController');
+        });
+
     }
 );
 
