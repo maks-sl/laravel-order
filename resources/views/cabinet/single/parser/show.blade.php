@@ -66,5 +66,21 @@
             <tbody>
             </tbody>
         </table>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Check Time</th><th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($parser->results as $result)
+                <tr>
+                    <th>{{ $result->created_at }}</th><td>{{ $result->value }}</td>
+                </tr>
+            @endforeach
+            <tbody>
+            </tbody>
+        </table>
     </div>
 @endsection

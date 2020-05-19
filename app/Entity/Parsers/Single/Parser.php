@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property Carbon $updated_at
  *
  * @property User $user
+ * @property Result[] $results
  *
  * @method static Builder forUser(User $user)
  */
@@ -52,6 +53,11 @@ class Parser extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 
     public function scopeForUser(Builder $query, User $user)
