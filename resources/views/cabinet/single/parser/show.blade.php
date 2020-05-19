@@ -8,10 +8,10 @@
         <a href="{{ route('cabinet.single.parser.edit', $parser) }}" class="btn btn-primary mr-1">Edit</a>
 
 {{--        @if ($parser->isActive())--}}
-{{--            <form method="POST" action="{{ route('cabinet.parsers.verify', $parser) }}" class="mr-1">--}}
-{{--                @csrf--}}
-{{--                <button class="btn btn-success">Verify</button>--}}
-{{--            </form>--}}
+            <form method="POST" action="{{ route('cabinet.single.parser.run', $parser) }}" class="mr-1">
+                @csrf
+                <button class="btn btn-success">Run</button>
+            </form>
 {{--        @endif--}}
 
         <form method="POST" action="{{ route('cabinet.single.parser.destroy', $parser) }}" class="mr-1">

@@ -46,6 +46,7 @@ Route::group(
         ],
         function () {
             Route::resource('parser', 'ParserController');
+            Route::post('/parser/{parser}/run', 'ParserController@run')->name('parser.run');
         });
 
     }
