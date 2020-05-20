@@ -62,6 +62,17 @@ class Parser extends Model
             'status' => self::STATUS_PAUSED,
         ]);
     }
+
+    public function isExpired(): bool
+    {
+        $results_fresh = $this->results()
+            ->where(
+                'created_at',
+                '>=',
+                Carbon::now()->subMinutes($this->period)->toDateTimeString());
+        return !$results_fresh->exists();
+    }
+
     // ########### RELATIONS #############
 
     public function user()

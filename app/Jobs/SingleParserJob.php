@@ -17,15 +17,25 @@ class SingleParserJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $parser;
+    private $checkPeriod;
 
-    public function __construct(Parser $parser)
+    public function __construct(Parser $parser, $checkPeriod = false)
     {
         $this->parser = $parser;
+        $this->checkPeriod = $checkPeriod;
     }
 
     public function handle()
     {
         $parser = $this->parser;
+
+        if ($this->checkPeriod) {
+            if (!$parser->isExpired()) {
+//                throw new \RuntimeException('Parser is no expired')
+                return;
+            }
+        }
+
         $html = file_get_contents($parser->url);
 
         $crawler = new Crawler(null, $parser->url);
