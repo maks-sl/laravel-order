@@ -82,7 +82,7 @@ class Parser extends Model
 
     public function results()
     {
-        return $this->hasMany(Result::class);
+        return $this->hasMany(Result::class)->orderByDesc('id');
     }
 
     public function scopeForUser(Builder $query, User $user)
