@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property string $css_path
  * @property string $regex
  * @property int $match_group
+ * @property int $period
  * @property bool $strip_tags
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -34,7 +35,7 @@ class Parser extends Model
     const STATUS_PAUSED = 0;
     const STATUS_ACTIVE = 1;
 
-    protected $fillable = ['name', 'status', 'url', 'css_path', 'regex', 'match_group', 'strip_tags'];
+    protected $fillable = ['name', 'status', 'url', 'css_path', 'regex', 'match_group', 'strip_tags', 'period'];
 
     protected $table = "parser_single";
 
@@ -48,6 +49,19 @@ class Parser extends Model
         return $this->status == self::STATUS_PAUSED;
     }
 
+    public function activate(): void
+    {
+        $this->update([
+            'status' => self::STATUS_ACTIVE,
+        ]);
+    }
+
+    public function pause(): void
+    {
+        $this->update([
+            'status' => self::STATUS_PAUSED,
+        ]);
+    }
     // ########### RELATIONS #############
 
     public function user()

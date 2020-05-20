@@ -61,6 +61,14 @@
             </div>
 
             <div class="form-group">
+                <label for="period" class="col-form-label">Period</label>
+                <input id="period" class="form-control{{ $errors->has('period') ? ' is-invalid' : '' }}" name="period" value="{{ old('period', $parser->period) }}" required>
+                @if ($errors->has('period'))
+                    <span class="invalid-feedback"><strong>{{ $errors->first('period') }}</strong></span>
+                @endif
+            </div>
+
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>

@@ -38,6 +38,7 @@ class ParserController extends Controller
             'regex' => $request['regex'],
             'match_group' => $request['match_group'],
             'strip_tags' => (bool)$request['strip_tags'],
+            'period' => $request['period'],
             'status' => Parser::STATUS_PAUSED,
         ]);
 
@@ -59,7 +60,7 @@ class ParserController extends Controller
 
     public function update(SingleRequest $request, Parser $parser)
     {
-        $parser->update($request->only(['name', 'url', 'css_path', 'regex', 'match_group']));
+        $parser->update($request->only(['name', 'url', 'css_path', 'regex', 'match_group', 'period']));
         $parser->update(['strip_tags'=> (bool)$request['strip_tags']]);
         return redirect()->route('cabinet.single.parser.show', $parser);
     }
@@ -69,6 +70,20 @@ class ParserController extends Controller
         $parser->delete();
 
         return redirect()->route('cabinet.single.parser.index');
+    }
+
+    public function activate(Parser $parser)
+    {
+        $parser->activate();
+
+        return redirect()->back()->with('success', 'Parser '.$parser->id.' is activated');
+    }
+
+    public function pause(Parser $parser)
+    {
+        $parser->pause();
+
+        return redirect()->back()->with('success', 'Parser '.$parser->id.' is paused');
     }
 
     public function run(Parser $parser)

@@ -7,12 +7,21 @@
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('cabinet.single.parser.edit', $parser) }}" class="btn btn-primary mr-1">Edit</a>
 
-{{--        @if ($parser->isActive())--}}
-            <form method="POST" action="{{ route('cabinet.single.parser.run', $parser) }}" class="mr-1">
+        <form method="POST" action="{{ route('cabinet.single.parser.run', $parser) }}" class="mr-1">
+            @csrf
+            <button class="btn btn-success">Run</button>
+        </form>
+        @if ($parser->isActive())
+            <form method="POST" action="{{ route('cabinet.single.parser.pause', $parser) }}" class="mr-1">
                 @csrf
-                <button class="btn btn-success">Run</button>
+                <button class="btn btn-secondary">Pause</button>
             </form>
-{{--        @endif--}}
+        @else
+            <form method="POST" action="{{ route('cabinet.single.parser.activate', $parser) }}" class="mr-1">
+                @csrf
+                <button class="btn btn-success">Activate</button>
+            </form>
+        @endif
 
         <form method="POST" action="{{ route('cabinet.single.parser.destroy', $parser) }}" class="mr-1">
             @csrf
@@ -51,6 +60,9 @@
                         <span class="badge badge-secondary">Off</span>
                     @endif
                 </td>
+            </tr>
+            <tr>
+                <th>Period</th><td>{{ $parser->period }}</td>
             </tr>
             <tr>
                 <th>Status</th>
